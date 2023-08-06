@@ -7,6 +7,9 @@ tasks = []
 #Prompt user for the task title and add it to the 'tasks' list
 def add_task():
     title = input("\nAdd a task: ")
+    while not title:
+        print("\nTask title cannot be empty. Please try again.")
+        title = input("\nAdd a task: ")
     task = {"Title": title, "Completed": False}
     tasks.append(task)
     print("\nTask added successfully!\n")
@@ -20,9 +23,10 @@ def load_tasks():
         with open("tasks.txt", "r") as file:
             tasks.extend(json.load(file))
             print("\nTasks loaded successfully!")
-    except (FileNotFoundError,json.JSONDecodeError):
+    except FileNotFoundError:
         print("\nNo previous tasks found.")
-
+    except json.JSONDecodeError:
+        print("\nError while loading tasks. The file may be corrupted.")
 
 #Updates the "tasks.txt" file with the current tasks list
 def update_file():
@@ -32,7 +36,7 @@ def update_file():
 #Displays all the tasks along with their completion status.
 def view_tasks():
     if not tasks:
-        print("\nThere are no tasks in the list\n")
+        print("\nThere are no tasks in the list.\n")
 
     print("\nTasks: ")
     for index, task in enumerate(tasks, start=1):
@@ -43,25 +47,25 @@ def view_tasks():
 #Marks a task as completed based on user input.
 def mark_completed():
     if not tasks:
-        print("\nThere are no tasks in the list\n")
+        print("\nThere are no tasks in the list.\n")
         return
     
     view_tasks()
     while True:
         try:
-            prompt = int(input("\nChoose a task number to mark as completed. Otherwise, to return to main menu, press '0': "))
-            if 1 <= prompt <= len(tasks):
-                tasks[prompt - 1]["Completed"] = True
-                print("Task marked as completed")
+            task_number = int(input("\nChoose a task number to mark as completed. Otherwise, to return to main menu, press '0': "))
+            if 1 <= task_number <= len(tasks):
+                tasks[task_number - 1]["Completed"] = True
+                print("Task marked as completed.")
                 #update the "tasks.txt" file
                 update_file()
                 break
-            elif prompt == 0:
+            elif task_number == 0:
                 return
             else:
-                print("\nInvalid input. Please try again")
+                print("\nInvalid input. Please try again.")
         except ValueError:
-            print("\nInvalid input. Please enter a valid task number")
+            print("\nInvalid input. Please enter a valid task number.")
     
 
     
@@ -93,7 +97,7 @@ def main():
             running = False
             break
         else:
-            print("\nInvalid choice. Please try again")
+            print("\nInvalid choice. Please try again.")
 
 
 #ensure the main code block is executed only when the script is run directly,

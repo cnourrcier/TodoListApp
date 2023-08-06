@@ -19,3 +19,6 @@ Updates 8/6/23
 
 - updated method of loading tasks from "tasks.txt" for better efficiency. 
 
+- added an additional error handling message in load_tasks() function to address potentially corrupted files.
+
+- added additional validation feature in add_task() function to handle empty user input.
