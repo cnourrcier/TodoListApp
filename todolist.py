@@ -1,74 +1,77 @@
 
-#define a list to store the tasks.
-#each task will be represented as a dictionary with 'title' and 'completed' keys.
+#The initial list variable to store tasks.
 tasks = []
 
-#function to add tasks to the list.
-#prompt user for the task title and add it to the 'tasks' list
+
+#Prompt user for the task title and add it to the 'tasks' list
 def add_task():
-    title = input("\nEnter the task: ")
-    task = {'title': title, 'completed': False}
+    title = input("\nAdd a task: ")
+    task = {"Title": title, "Completed": False}
     tasks.append(task)
-    print("task added successfully!")
+    print("\nTask added successfully!\n")
 
 
-#function to display all the tasks in the 'tasks' list
+#Displays all the tasks along with their completion status.
 def view_tasks():
     if not tasks:
-        print("\nNo tasks in the list.")
-    else:
-        print("\nTasks: ")
-        for index, task in enumerate(tasks, start=1):
-            status = "Done" if task['completed'] else "Not Done"
-            print(f"{index}.{task['title']} - {status}")
+        print("\nThere are no tasks in the list\n")
+
+    print("\nTasks: ")
+    for index, task in enumerate(tasks, start=1):
+        status = "Done" if task['Completed'] else "Not Done"
+        print(f"{index}. {task['Title']} - {status}")
 
 
-#function to mark a task as completed based on the user's input
+#Marks a task as completed based on user input.
 def mark_completed():
-    if not tasks:
-        print("No tasks in the list")
-        return
-    view_tasks()
     while True:
         try:
-            task_number = int(input("Enter the task number to mark as completed: "))
-            if 1 <= task_number <= len(tasks):
-                tasks[task_number - 1]["completed"] = True
-                print("Task marked as completed!")
-                break
+            if not tasks:
+                print("\nThere are no tasks in the list\n")
+                return
+            view_tasks()
+            prompt = int(input("\nChoose a task number to mark as completed. Otherwise, to return to main menu, press '0': "))
+            if 1 <= prompt <= len(tasks):
+                tasks[prompt - 1]["Completed"] = True
+                return
+            elif prompt == 0:
+                return
             else:
-                print("Invalid task number")
+                print("\nInvalid input. Please try again")
         except ValueError:
-            print("Invalid input. Please enter a valid task number")          
+            print("\nInvalid input. Please enter a valid task number") 
 
-#main function
-#lists options for user to choose from and calls functions based on user choice.
+    
+
+
+#Displays the menu of options and handles user choices.
+#The program continues running until the user chooses to exit.
 def main():
-    while True:
+    running = True
+    while running == True:
         print("\nOptions: ")
-        print("1. Add a task")
-        print("2. View tasks")
-        print("3. Mark a task as completed")
+        print("1. Add a Task")
+        print("2. View Tasks")
+        print("3. Mark Task as Completed")
         print("4. Exit")
 
-        choice = input("Enter your choice: ")
+        option = input("\nType a number to choose an option from the menu: ")
 
-        if choice == "1":
+        if option == '1':
             add_task()
-        elif choice == "2":
+        elif option == '2':
             view_tasks()
-        elif choice == "3":
+        elif option == '3':
             mark_completed()
-        elif choice == "4":
+        elif option == '4':
             print("Goodbye!")
+            running = False
             break
         else:
-            print("Invalid choice. Please try again")
+            print("\nInvalid choice. Please try again")
 
 
 #ensure the main code block is executed only when the script is run directly,
-#and not when it is imported as a module into another script. 
+#and not when it is imported as a module into another script.
 if __name__ == "__main__":
-    main()
-        
-
+    main() 
