@@ -10,6 +10,21 @@ def add_task():
     tasks.append(task)
     print("\nTask added successfully!\n")
 
+    #save tasks to the "tasks.txt" file
+    with open("tasks.txt", "a") as file:
+        file.write(f"{title}\n")
+
+def load_tasks():
+    try:
+        with open("tasks.txt", "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                title = line.strip()
+                task = {"Title": title, "Completed": False}
+                tasks.append(task)
+            print("\nTasks loaded successfully!")
+    except FileNotFoundError:
+        print("\nNo previous tasks found.")
 
 #Displays all the tasks along with their completion status.
 def view_tasks():
@@ -47,6 +62,8 @@ def mark_completed():
 #Displays the menu of options and handles user choices.
 #The program continues running until the user chooses to exit.
 def main():
+    load_tasks()
+    
     running = True
     while running == True:
         print("\nOptions: ")
