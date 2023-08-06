@@ -18,10 +18,7 @@ def add_task():
 def load_tasks():
     try:
         with open("tasks.txt", "r") as file:
-            tasks_data = json.load(file)
-            for task_data in tasks_data:
-                task = {"Title": task_data["Title"],"Completed": task_data["Completed"]}
-                tasks.append(task)
+            tasks.extend(json.load(file))
             print("\nTasks loaded successfully!")
     except (FileNotFoundError,json.JSONDecodeError):
         print("\nNo previous tasks found.")
