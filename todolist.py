@@ -10,13 +10,18 @@ def add_task():
     while not title:
         print("\nTask title cannot be empty. Please try again.")
         title = input("\nAdd a task: ")
-    task = {"Title": title, "Completed": False}
+    priority = int(input("\nEnter task priority (1 - high, 2 - medium, 3 - low): "))
+    while priority not in [1, 2, 3]:
+        print("\nInvalid input. Please enter 1, 2, or 3.")
+        priority = int(input("\nEnter task priority (1 - high, 2 - medium, 3 - low): "))
+    task = {"title": title, "completed": False, "priority": priority}
     tasks.append(task)
     print("\nTask added successfully!\n")
 
     #save tasks to the "tasks.txt" file
     with open("tasks.txt", "w") as file:
         json.dump(tasks, file)
+
 
 def load_tasks():
     try:
@@ -28,10 +33,12 @@ def load_tasks():
     except json.JSONDecodeError:
         print("\nError while loading tasks. The file may be corrupted.")
 
+
 #Updates the "tasks.txt" file with the current tasks list
 def update_file():
     with open("tasks.txt", "w") as file:
         json.dump(tasks, file)
+
 
 #Displays all the tasks along with their completion status.
 def view_tasks():
@@ -40,8 +47,14 @@ def view_tasks():
 
     print("\nTasks: ")
     for index, task in enumerate(tasks, start=1):
-        status = "Done" if task['Completed'] else "Not Done"
-        print(f"{index}. {task['Title']} - {status}")
+        status = "Done" if task["completed"] else "Not Done"
+        if task["priority"] == 1:
+            priority = 'High'
+        elif task["priority"] == 2:
+            priority == 'Medium'
+        else:
+            priority = 'Low'
+        print(f"{index}. {priority} priority - {task['title']} - {status}")
 
 
 #Marks a task as completed based on user input.
@@ -55,7 +68,7 @@ def mark_completed():
         try:
             task_number = int(input("\nChoose a task number to mark as completed. Otherwise, to return to main menu, press '0': "))
             if 1 <= task_number <= len(tasks):
-                tasks[task_number - 1]["Completed"] = True
+                tasks[task_number - 1]["completed"] = True
                 print("Task marked as completed.")
                 #update the "tasks.txt" file
                 update_file()
