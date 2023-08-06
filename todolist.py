@@ -12,19 +12,29 @@ def add_task():
 
     #save tasks to the "tasks.txt" file
     with open("tasks.txt", "a") as file:
-        file.write(f"{title}\n")
+        file.write(f"{title}|{False}\n")
 
 def load_tasks():
     try:
         with open("tasks.txt", "r") as file:
             lines = file.readlines()
             for line in lines:
-                title = line.strip()
-                task = {"Title": title, "Completed": False}
+                title, completed_str = line.strip().split('|')
+                completed = True if completed_str == "True" else False
+                task = {"Title": title, "Completed": completed}
                 tasks.append(task)
             print("\nTasks loaded successfully!")
     except FileNotFoundError:
         print("\nNo previous tasks found.")
+
+
+#Updates the "tasks.txt" file with the current tasks list
+def update_file():
+    with open("tasks.txt", "w") as file:
+        for task in tasks:
+            title = task["Title"]
+            completed = task["Completed"]
+            file.write(f"{title}|{completed}\n")
 
 #Displays all the tasks along with their completion status.
 def view_tasks():
@@ -39,22 +49,27 @@ def view_tasks():
 
 #Marks a task as completed based on user input.
 def mark_completed():
+    if not tasks:
+        print("\nThere are no tasks in the list\n")
+        return
+    
+    view_tasks()
     while True:
         try:
-            if not tasks:
-                print("\nThere are no tasks in the list\n")
-                return
-            view_tasks()
             prompt = int(input("\nChoose a task number to mark as completed. Otherwise, to return to main menu, press '0': "))
             if 1 <= prompt <= len(tasks):
                 tasks[prompt - 1]["Completed"] = True
-                return
+                print("Task marked as completed")
+                #update the "tasks.txt" file
+                update_file()
+                break
             elif prompt == 0:
                 return
             else:
                 print("\nInvalid input. Please try again")
         except ValueError:
-            print("\nInvalid input. Please enter a valid task number") 
+            print("\nInvalid input. Please enter a valid task number")
+    
 
     
 
@@ -63,7 +78,7 @@ def mark_completed():
 #The program continues running until the user chooses to exit.
 def main():
     load_tasks()
-    
+
     running = True
     while running == True:
         print("\nOptions: ")
