@@ -13,3 +13,7 @@ Update 8/5/23
 Update 8/5/23
 
 - modified code to store and update task completion status in "tasks.txt" file.
+
+Update 8/6/23
+
+- modified file writing and reading to json format for more structure and efficiency. 

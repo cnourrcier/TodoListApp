@@ -1,3 +1,4 @@
+import json
 
 #The initial list variable to store tasks.
 tasks = []
@@ -11,30 +12,25 @@ def add_task():
     print("\nTask added successfully!\n")
 
     #save tasks to the "tasks.txt" file
-    with open("tasks.txt", "a") as file:
-        file.write(f"{title}|{False}\n")
+    with open("tasks.txt", "w") as file:
+        json.dump(tasks, file)
 
 def load_tasks():
     try:
         with open("tasks.txt", "r") as file:
-            lines = file.readlines()
-            for line in lines:
-                title, completed_str = line.strip().split('|')
-                completed = True if completed_str == "True" else False
-                task = {"Title": title, "Completed": completed}
+            tasks_data = json.load(file)
+            for task_data in tasks_data:
+                task = {"Title": task_data["Title"],"Completed": task_data["Completed"]}
                 tasks.append(task)
             print("\nTasks loaded successfully!")
-    except FileNotFoundError:
+    except (FileNotFoundError,json.JSONDecodeError):
         print("\nNo previous tasks found.")
 
 
 #Updates the "tasks.txt" file with the current tasks list
 def update_file():
     with open("tasks.txt", "w") as file:
-        for task in tasks:
-            title = task["Title"]
-            completed = task["Completed"]
-            file.write(f"{title}|{completed}\n")
+        json.dump(tasks, file)
 
 #Displays all the tasks along with their completion status.
 def view_tasks():
