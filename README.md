@@ -24,3 +24,5 @@ Updates 8/6/23
 - added additional validation feature in add_task() function to handle empty user input.
 
 - added feature for user to input priority ranking for each task based on 1 - High , 2 - Medium, and 3 - Low priority.
+
+- added feature for user to input a due date for each task.

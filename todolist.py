@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 #The initial list variable to store tasks.
 tasks = []
@@ -10,11 +11,21 @@ def add_task():
     while not title:
         print("\nTask title cannot be empty. Please try again.")
         title = input("\nAdd a task: ")
+    
     priority = int(input("\nEnter task priority (1 - high, 2 - medium, 3 - low): "))
     while priority not in [1, 2, 3]:
         print("\nInvalid input. Please enter 1, 2, or 3.")
         priority = int(input("\nEnter task priority (1 - high, 2 - medium, 3 - low): "))
-    task = {"title": title, "completed": False, "priority": priority}
+    
+    due_date_str = input("\nPlease enter the due date (YYYY-MM-DD): ")
+    #check if due date was entered correctly
+    try:
+        due_date = datetime.strptime(due_date_str, "%Y-%m-%d")
+    except:
+        print("\nInvalid input. Please enter date in YYYY-MM-DD format.")
+        return
+    #due_date = json_encoder(due_date)
+    task = {"title": title, "completed": False, "priority": priority, "due_date": due_date_str}
     tasks.append(task)
     print("\nTask added successfully!\n")
 
@@ -51,10 +62,11 @@ def view_tasks():
         if task["priority"] == 1:
             priority = 'High'
         elif task["priority"] == 2:
-            priority == 'Medium'
+            priority = 'Medium'
         else:
             priority = 'Low'
-        print(f"{index}. {priority} priority - {task['title']} - {status}")
+        due_date = task.get("due_date", "no due date")
+        print(f"{index}. {priority} priority - {task['title']} - due date: {due_date} - {status}")
 
 
 #Marks a task as completed based on user input.
@@ -81,7 +93,11 @@ def mark_completed():
             print("\nInvalid input. Please enter a valid task number.")
     
 
-    
+# #Serialize datetime objects to string objects
+# def json_encoder(obj):
+#     if isinstance(obj, datetime):
+#         return obj.isoformat()
+#     raise TypeError(f"Object of type {type(obj)} is not JSON serializable.")    
 
 
 #Displays the menu of options and handles user choices.
