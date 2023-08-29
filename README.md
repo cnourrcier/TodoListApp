@@ -1,28 +1,62 @@
-# TodoListApp
-A simple command-line based Todo List application written in Python.
+# Task Management Script
 
-Description
+This script is a simple task management tool that allows you to add tasks, view tasks, mark tasks as completed, and exit the program. Tasks are stored in a JSON file called "tasks.txt".
 
-This Python script allows users to manage a list of tasks, including adding new tasks, viewing existing tasks, and marking tasks as completed. 
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Usage](#usage)
+- [Functionality](#functionality)
+- [Contributing](#contributing)
 
-Updates 8/5/23
+## Features
 
-- modified 'add_task' function to save tasks to the "tasks.txt" file after adding them to the 'tasks' list.
+- Add new tasks with a title, priority, and due date.
+- View the list of tasks along with their details.
+- Mark tasks as completed.
+- Save and load tasks from a JSON file.
 
-- created new function 'load_tasks' to read the tasks from the "tasks.txt" file and populate the 'tasks' list.
+## Getting Started
 
-- modified code to store and update task completion status in "tasks.txt" file.
+### Prerequisites
 
-Updates 8/6/23
+- Python 3.x installed on your system.
 
-- modified file writing and reading to json format for more structure and efficiency. 
+### Usage
 
-- updated method of loading tasks from "tasks.txt" for better efficiency. 
+1. Clone this repository or download the script directly.
+2. Open a terminal or command prompt.
+3. Navigate to the directory containing the script.
+4. Run the script using the following command:
 
-- added an additional error handling message in load_tasks() function to address potentially corrupted files.
+   <pre>
+   python script.py
+   </pre>
 
-- added additional validation feature in add_task() function to handle empty user input.
+## Functionality
 
-- added feature for user to input priority ranking for each task based on 1 - High , 2 - Medium, and 3 - Low priority.
+### Add a Task
 
-- added feature for user to input a due date for each task.
+- Prompts you to input task details: title, priority, and due date (in YYYY-MM-DD format).
+- Validates input and ensures the task title is not empty.
+- Saves tasks to the "tasks.txt" file in JSON format.
+
+### View Tasks
+
+- Displays a list of all tasks along with their details.
+- Shows the task's completion status, priority, title, and due date.
+
+### Mark Task as Completed
+
+- Lists all tasks with their details.
+- Allows you to mark a task as completed by selecting its corresponding task number.
+- Updates the completion status of the task in the list and the "tasks.txt" file.
+
+### Exit
+
+- Terminates the program.
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions, improvements, or bug fixes, feel free to open an issue or create a pull request.
