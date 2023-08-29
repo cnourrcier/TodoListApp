@@ -1,4 +1,4 @@
-# Task Management Script
+# Task Management "To Do List"
 
 This script is a simple task management tool that allows you to add tasks, view tasks, mark tasks as completed, and exit the program. Tasks are stored in a JSON file called "tasks.txt".
 
@@ -31,7 +31,7 @@ This script is a simple task management tool that allows you to add tasks, view 
 4. Run the script using the following command:
 
    <pre>
-   python script.py
+   python todolist.py
    </pre>
 
 ## Functionality
